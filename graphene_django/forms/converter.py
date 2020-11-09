@@ -77,6 +77,12 @@ def convert_form_field_to_datetime(field):
 def convert_form_field_to_time(field):
     return Time(description=field.help_text, required=field.required)
 
+# TODO: remove in graphene-django v3
+# https://github.com/graphql-python/graphene-django/pull/611/
+@convert_form_field.register(forms.MultipleChoiceField)
+def convert_form_field_to_string_list(field):
+    return List(String, description=field.help_text, required=field.required)
+
 
 @convert_form_field.register(forms.ModelChoiceField)
 @convert_form_field.register(GlobalIDFormField)
